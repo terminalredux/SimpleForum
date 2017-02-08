@@ -22,7 +22,7 @@ use yii\helpers\Url;
                 <small>
                     <?= Yii::$app->formatter->asDatetime($model->created_at) ?>
                     
-                    <?php if((!Yii::$app->user->isGuest) && ($model->user->id == Yii::$app->user->identity->id)): ?>
+                    <?php if(!Yii::$app->user->isGuest): ?>
                     <a style="float: right" href="<?= Url::to(['/post/edit-post', 'id' => $model->id]) ?>">(Edytuj post)</a>
                     <?php endif; ?>
                     

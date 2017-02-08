@@ -25,7 +25,7 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view', 'create', 'update', 'delete'],
+                'only' => ['index','view', 'create', 'update', 'delete', 'edit-post'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -51,6 +51,11 @@ class PostController extends Controller
                         'allow' => true,
                         'actions' => ['delete'],
                         'roles' => ['deletePost'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['edit-post'],
+                        'roles' => ['editPost'],
                     ],
                 ],
             ],

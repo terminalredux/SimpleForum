@@ -61,12 +61,16 @@ class RbacController extends Controller
         $auth->add($viewPost);
         
         $updatePost = $auth->createPermission('updatePost');
-        $updatePost->description = 'Update a post';
+        $updatePost->description = 'Update a post on CRUD table';
         $auth->add($updatePost);
         
         $deletePost = $auth->createPermission('deletePost');
         $deletePost->description = 'Delete a post';
         $auth->add($deletePost);
+        
+        $editPost = $auth->createPermission('editPost');  // action on forum
+        $editPost->description = "editing post on forum";
+        $auth->add($editPost);
         
         // AUTH PERMISSION --------------
         
@@ -143,6 +147,7 @@ class RbacController extends Controller
         $auth->addChild($mod, $updatePost);
         $auth->addChild($mod, $updateTopic);
         $auth->addChild($mod, $updateUser);
+        $auth->addChild($mod, $editPost);
         
         $admin = $auth->createRole('admin');
         $auth->add($admin);
@@ -160,8 +165,6 @@ class RbacController extends Controller
         $auth->assign($mod, 61);     
         $auth->assign($admin, 62);    
     }
-    
-    
     
     public function actionIndex()
     {
