@@ -47,6 +47,11 @@ class RegisterForm extends Model
         
         if($user->save()){
             
+            //RBAC, adding role to user
+            $auth = \Yii::$app->authManager;
+            $userRole = $auth->getRole('user'); 
+            $auth->assign($userRole, $user->getId()); 
+            
             $link = Url::to(['site/account-activation', 'token' => $user->register_token, 'id' => $user->id], true);
             
             Yii::$app->mailer->compose()

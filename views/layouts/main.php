@@ -36,11 +36,23 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ['label' => 'Auth', 
+            'visible' => !Yii::$app->user->isGuest,
+            'items' => [
+                ['label' => 'auth_item', 'url' => '/rbac/index'],
+                ],    
+            ],
+            ['label' => 'Admin CRUD',
+            'visible' => !Yii::$app->user->isGuest,
+            'items' => [
+                ['label' => 'User', 'url' => '/user/index'],
+                ['label' => 'Category', 'url' => '/category/index'],
+                ['label' => 'Topic', 'url' => '/topic/index'],
+                ['label' => 'Post', 'url' => '/post/index'],
+                ],    
+            ],
             ['label' => 'Register', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest], 
-            ['label' => 'User', 'url' => ['/user/index'], 'visible' => !Yii::$app->user->isGuest],
-            ['label' => 'Category', 'url' => ['/category/index'], 'visible' => !Yii::$app->user->isGuest],
-            ['label' => 'Topic', 'url' => ['/topic/index'], 'visible' => !Yii::$app->user->isGuest],
-            ['label' => 'Post', 'url' => ['/post/index'], 'visible' => !Yii::$app->user->isGuest],
+            
             ['label' => 'Forum', 'url' => ['/category/category']],
             ['label' => 'Contact', 'url' => ['/site/contact'], 'visible' => false ],
             ['label' => 'Profile', 'url' => ['/site/user-profile'], 'visible' => !Yii::$app->user->isGuest],

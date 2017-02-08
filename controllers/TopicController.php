@@ -31,7 +31,28 @@ class TopicController extends Controller {
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['index'],
+                        'roles' => ['indexTopic'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['viewTopic'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['createTopic'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['updateTopic'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['deleteTopic'],
                     ],
                 ],
             ],
@@ -177,6 +198,7 @@ class TopicController extends Controller {
         }else{
            return $this->render('addTopic', ['topicModel' => $topicModel, 'postModel' => $postModel]); 
         }
-        
     }
+    
+    
 }

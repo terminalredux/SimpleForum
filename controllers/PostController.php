@@ -29,7 +29,28 @@ class PostController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['index'],
+                        'roles' => ['indexPost'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['viewPost'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['createPost'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['updatePost'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['deletePost'],
                     ],
                 ],
             ],
@@ -178,9 +199,6 @@ class PostController extends Controller
         }
     }
     
-    public function actionNothing(){
-        return $this->render('post');
-    }
-    
+   
    
 }

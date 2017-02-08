@@ -25,7 +25,8 @@ class CategoryController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                        'roles' => ['accessCategory'],
                     ],
                 ],
             ],
