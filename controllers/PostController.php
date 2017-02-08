@@ -177,4 +177,10 @@ class PostController extends Controller
             return $this->render('editPost', ['model' => $model]);
         }
     }
+    
+    public function actionNothing(){
+        return $this->render('post');
+    }
+    
+   
 }
