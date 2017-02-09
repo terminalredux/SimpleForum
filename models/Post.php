@@ -119,6 +119,15 @@ class Post extends \yii\db\ActiveRecord
        return $this->topic->touch('last_post');
     }
     
+    public static function findModel($id)
+    {
+        if (($model = Post::findOne(['id' => $id])) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
     
     
     

@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/basic/controllers/CategoryController.php</file>
-            <file>file:/C:/xampp/htdocs/basic/controllers/TopicController.php</file>
+            <file>file:/C:/xampp/htdocs/basic/views/post/postSingleItem.php</file>
+            <file>file:/C:/xampp/htdocs/basic/controllers/PostController.php</file>
+            <file>file:/C:/xampp/htdocs/basic/controllers/RbacController.php</file>
         </group>
     </open-files>
 </project-private>

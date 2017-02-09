@@ -9,6 +9,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\helpers\HtmlPurifier;
 
 
+
 /**
  * This is the model class for table "user".
  *
@@ -123,6 +124,17 @@ class User extends ActiveRecord implements IdentityInterface {
 
     public static function findByEmail($email) {
         return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+    }
+    
+    public static function getUserRole($id)
+    {
+        $role = (new \yii\db\Query())
+                ->select('item_name')
+                ->from('auth_assignment')
+                ->where(['user_id' => $id])
+                ->one();
+        
+        return $role;
     }
 
 

@@ -54,6 +54,11 @@ class TopicController extends Controller {
                         'actions' => ['delete'],
                         'roles' => ['deleteTopic'],
                     ],
+                    [
+                        'allow' => true,
+                        'actions' => ['add-topic'],
+                        'roles' => ['createTopic'],
+                    ],
                 ],
             ],
             'verbs' => [

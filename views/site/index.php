@@ -8,6 +8,6 @@ $this->title = 'Super Forum';
 
     <div class="body-content">
   
-       
+     
     </div>
 </div>

@@ -14,8 +14,10 @@ use yii\helpers\Url;
         <div class="row">
             <div class="col-sm-3 col-md-2">
                 <p><strong><?= Html::encode($model->user->name) ?></strong></p>
-                <p><small>Rejestracja: <?= Yii::$app->formatter->asRelativeTime($model->user->created_at); ?></small></p>
-                <p><small>Posty: <?= Post::countPostOfUser($model->user_id) ?></small></p>
+                <small><p>Rejestracja: <?= Yii::$app->formatter->asRelativeTime($model->user->created_at); ?></p>
+                <p>Posty: <?= Post::countPostOfUser($model->user_id) ?></p>
+                <p>Funkcja: <?= User::getUserRole($model->user->id)['item_name'] ?>
+                </p></small>
                 
             </div>
             <div class="col-sm-9 col-md-10">

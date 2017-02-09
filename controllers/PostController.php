@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 
+
 /**
  * PostController implements the CRUD actions for Post model.
  */
@@ -25,7 +26,7 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view', 'create', 'update', 'delete', 'edit-post'],
+                'only' => ['index','view', 'create', 'delete'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -44,18 +45,8 @@ class PostController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['update'],
-                        'roles' => ['updatePost'],
-                    ],
-                    [
-                        'allow' => true,
                         'actions' => ['delete'],
                         'roles' => ['deletePost'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['edit-post'],
-                        'roles' => ['editPost'],
                     ],
                 ],
             ],
@@ -125,13 +116,22 @@ class PostController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
+        if (\Yii::$app->user->can('updateOwnPost', ['post' => $model]) || \Yii::$app->user->can('updatePost')) {
+            
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
                 'model' => $model,
             ]);
+            }
+            
+        }else{
+            throw new \yii\web\HttpException(403, 'The requested Item could not be found.');
         }
+        
+        
+       
     }
 
     /**
@@ -193,17 +193,19 @@ class PostController extends Controller
     {
         $model = Post::findOne($id);
         
-        if($model->load(Yii::$app->request->post()) && $model->validate()){
-            $model->save();
-            
-            $provider = (new PostSearch())->provider($model->topic_id);
-            
-            return $this->render('posts', [ 'provider' => $provider, 'topic_id' => $model->topic_id, 'postModel' => $model]);
+        if(\Yii::$app->user->can('updateOwnPost', ['post' => $model]) || \Yii::$app->user->can('updatePost')) {
+        
+            if($model->load(Yii::$app->request->post()) && $model->validate()){
+                $model->save();
+
+                $provider = (new PostSearch())->provider($model->topic_id);
+
+                return $this->render('posts', [ 'provider' => $provider, 'topic_id' => $model->topic_id, 'postModel' => $model]);
+            }else{
+                return $this->render('editPost', ['model' => $model]);
+            }
         }else{
-            return $this->render('editPost', ['model' => $model]);
+            throw new \yii\web\HttpException(403, 'The requested Item could not be found.');
         }
     }
-    
-   
-   
 }

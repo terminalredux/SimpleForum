@@ -46,7 +46,18 @@ class RbacController extends Controller
     {
         $auth = Yii::$app->authManager;
 
-        // POST PERMISSION ----------------------------------------------------- 
+        //       ---------------------------------------------------------------
+        // RULES ---------------------------------------------------------------
+        //       ---------------------------------------------------------------
+        
+        $rule = new \app\rbac\UserRule;
+        $auth->add($rule);
+        
+        //                 -----------------------------------------------------
+        //   PERMISSION    ----------------------------------------------------- 
+        //                 -----------------------------------------------------
+        
+        // POST 
         
         $indexPost = $auth->createPermission('indexPost');
         $indexPost->description = 'Create a index';
@@ -63,6 +74,11 @@ class RbacController extends Controller
         $updatePost = $auth->createPermission('updatePost');
         $updatePost->description = 'Update a post on CRUD table';
         $auth->add($updatePost);
+        
+        $updateOwnPost = $auth->createPermission('updateOwnPost');
+        $updateOwnPost->description = 'Update own post';
+        $updateOwnPost->ruleName = $rule->name;
+        $auth->add($updateOwnPost);
         
         $deletePost = $auth->createPermission('deletePost');
         $deletePost->description = 'Delete a post';
@@ -128,12 +144,16 @@ class RbacController extends Controller
         $deleteUser->description = "delete user";
         $auth->add($deleteUser);
         
+        //       ---------------------------------------------------------------
         // ROLES ---------------------------------------------------------------
-        
+        //       ---------------------------------------------------------------
+         
         $user = $auth->createRole('user');
         $auth->add($user);
         $auth->addChild($user, $indexPost);
         $auth->addChild($user, $createPost);
+        $auth->addChild($user, $updateOwnPost); // allow "user" to update their own posts
+        $auth->addChild($updateOwnPost, $updatePost); // add the "updateOwnPost" permission and associate the rule with it.
         $auth->addChild($user, $viewPost);
         $auth->addChild($user, $indexTopic);
         $auth->addChild($user, $viewTopic);
@@ -159,7 +179,9 @@ class RbacController extends Controller
         $auth->addChild($admin, $createUser);
         $auth->addChild($admin, $deleteUser);
         
-        // ASSIGNMENTS ROLES TO USER -------------------------------------------
+        //                           -------------------------------------------
+        // ASSIGNMENTS ROLE TO USER -------------------------------------------
+        //                           -------------------------------------------
         
         $auth->assign($user, 60);     
         $auth->assign($mod, 61);     
