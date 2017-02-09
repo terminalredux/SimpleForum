@@ -126,10 +126,4 @@ class Topic extends ActiveRecord
                        ->orderBy('created_at ASC')
                        ->one();   
     }
-    
-    
-    
-    
-    
-    
 }

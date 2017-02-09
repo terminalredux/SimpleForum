@@ -24,6 +24,7 @@ class RegisterForm extends Model
         return [
             [['email', 'password', 'password_repeat'], 'required', 'message' => 'Pole wymagane'],
             ['email', 'email', 'message' => 'To musi byc adres email'],
+            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Adres email zajęty'],
             [['password', 'password_repeat'], 'string', 'max' => 10, 'min'=>6],
             ['password', 'compare'],
             [['email', 'password'], function ($attribute) {
@@ -64,17 +65,10 @@ class RegisterForm extends Model
            return true; 
             
         }else{
-            
             return null;
-            
         }
-        
-       
-    }
-    
-    
+    } 
 }
-
 ?>
 
 

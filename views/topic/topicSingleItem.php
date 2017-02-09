@@ -11,12 +11,12 @@ use app\models\Topic;
     <a href="<?= Url::toRoute(['post/post', 'topic_id' => $model->id]) ?>" class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
         <h4 class="mb-1"><?= Html::encode($model->name) ?></h4>
-      
-        <p style="margin: 0"><small>Dodano: <?= Yii::$app->formatter->asDateTime($model->created_at) ?></small></p>
-        <p style="margin: 0"><samll>Autor: <?= Topic::getFirstPostOfTopic($model->id)->user->name ?> </small></p>    
-        <p style="margin: 0"><small>Posty: <?= Post::countPostInTopic($model->id) ?></small></p>
-        <p style="margin: 0"><small>Ostatnia aktywność: <?= Yii::$app->formatter->asDatetime($model->last_post) ?></small></p>
-          
+        <small>
+            <p style="margin: 0">Dodano: <?= Yii::$app->formatter->asDateTime($model->created_at) ?></p>
+            <p style="margin: 0">Autor: <?= Topic::getFirstPostOfTopic($model->id)->user->name ?> </p>    
+            <p style="margin: 0">Posty: <?= Post::countPostInTopic($model->id) ?></p>
+            <p style="margin: 0">Ostatnia aktywność: <?= Yii::$app->formatter->asDatetime($model->last_post) ?></p>
+        </small>
     </div>
     <p class="mb-1"></p>
     <small></small>

@@ -80,8 +80,6 @@ class User extends ActiveRecord implements IdentityInterface {
         return $this->hasMany(Post::className(), ['user_id' => 'id']);
     }
 
-    /*     * ******************************************************* */
-
     public static function findIdentity($id) {
         return static::findOne($id);
     }
@@ -94,7 +92,7 @@ class User extends ActiveRecord implements IdentityInterface {
         return $this->id;
     }
 
-    /* *********************** AUTH KEY ****************************** */
+    // AUTH KEY ----------------------------------------------------------------
 
     public function getAuthKey() {
         return $this->auth_key;
@@ -108,8 +106,8 @@ class User extends ActiveRecord implements IdentityInterface {
         return $this->getAuthKey() === $authKey;
     }
 
-    /* ********************** PASSWORD ****************************** */
-
+    // PASSWORD ----------------------------------------------------------------
+    
     public function validatePassword($password) {
         return Yii::$app->security->validatePassword($password, $this->password);
     }
@@ -136,6 +134,5 @@ class User extends ActiveRecord implements IdentityInterface {
         
         return $role;
     }
-
 
 }

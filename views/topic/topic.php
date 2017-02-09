@@ -19,7 +19,6 @@ use yii\helpers\Url;
             }
     ]); 
 ?>
-    
     <a class="btn btn-success" style="margin-top: 15px; float: right;" href="<?= Url::toRoute(['topic/add-topic', 'category_id' => $category_id]); ?>">Dodaj temat</a>
     
 </div>

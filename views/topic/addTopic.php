@@ -7,15 +7,12 @@ use yii\helpers\Html;
 
 <?php $form = ActiveForm::begin(); ?>
     
-
     <?= $form->field($topicModel, 'name')->textInput()->label('Nazwa tematu') ?>
 
     <?= $form->field($postModel, 'content')->textarea(['rows' => 6])->label('Pierwszy wpis') ?>
     
-
     <div class="form-group">
        <?= Html::submitButton('Dodaj temat', ['class' => 'btn btn-primary']) ?>
     </div>
-
 
 <?php ActiveForm::end(); ?>

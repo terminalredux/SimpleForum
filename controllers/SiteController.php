@@ -15,6 +15,8 @@ use const YII_ENV_TEST;
 
 class SiteController extends Controller {
 
+    const STATUS_ACTIVE = 1;
+    
     /**
      * @inheritdoc
      */
@@ -131,7 +133,7 @@ class SiteController extends Controller {
         $user = User::findOne($id);
 
         if ($user->register_token == $token) {
-            $user->status = 1;
+            $user->status = self::STATUS_ACTIVE;
             $user->save();
         }
         return $this->render('accountactivated', ['token' => $token, 'id' => $id]);
