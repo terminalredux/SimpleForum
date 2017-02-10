@@ -49,26 +49,36 @@ class RegisterForm extends Model
         $user->setRegisterToken();
         $user->setAuthKey();
         
-        if($user->save()){
+        $db = Yii::$app->db;
+        $transaction = $db->beginTransaction();
+        
+        try {
             
-            //RBAC, adding role to user
-            $auth = \Yii::$app->authManager;
-            $userRole = $auth->getRole('user'); 
-            $auth->assign($userRole, $user->getId()); 
+            if($user->save()){
+
+                //RBAC, adding role to user
+                $auth = \Yii::$app->authManager;
+                $userRole = $auth->getRole('user'); 
+                $auth->assign($userRole, $user->getId()); 
+
+                $link = Url::to(['site/account-activation', 'token' => $user->register_token], true);
+
+                Yii::$app->mailer->compose()
+                            ->setFrom('yiiforum@mail.com')
+                            ->setTo($user->email)
+                            ->setSubject('Rejestracja na forum')
+                            ->setHtmlBody('<a href="' . $link . '">Link aktywacyjny</a>')
+                            ->send();
+
+               $transaction->commit(); 
+               return true; 
+
+            }else{
+                return null;
+            }
             
-            $link = Url::to(['site/account-activation', 'token' => $user->register_token], true);
-            
-            Yii::$app->mailer->compose()
-                        ->setFrom('yiiforum@mail.com')
-                        ->setTo($user->email)
-                        ->setSubject('Rejestracja na forum')
-                        ->setHtmlBody('<a href="' . $link . '">Link aktywacyjny</a>')
-                        ->send();
-            
-           return true; 
-            
-        }else{
-            return null;
+        } catch (Exception $e) {
+            $transaction->rollback();
         }
     } 
 }
