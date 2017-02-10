@@ -8,7 +8,6 @@ use yii\helpers\Url;
 
 <h1>Temat z kategorii: <?= Category::findOne($category_id)->name ?></h1><br/>
 
-
 <div class="list-group">
 <?php
     echo ListView::widget([

@@ -15,6 +15,7 @@ class UserProfile extends User{
             ['name', 'string', 'min' => 10, 'max' => 20],
             ['name', 'match', 'pattern' => '/^[a-z]\w*$/i', 'message' => 'Zacznij od wielkiej litery (a-z0-9)'],
             ['email', 'email', 'message' => 'To musi być email'],
+            [['email', 'name'], 'unique', 'message' => 'Zajęty'],
         ];
     } 
 }

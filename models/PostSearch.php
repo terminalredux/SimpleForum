@@ -108,7 +108,6 @@ class PostSearch extends Post
             ],
             ]);
         
-        return $provider;
-        
+        return $provider; 
     }
 }

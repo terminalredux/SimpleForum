@@ -2,14 +2,13 @@
 
 namespace app\controllers;
 
-use yii\filters\AccessControl;
- 
 use Yii;
 use app\models\Post;
 use app\models\PostSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 
 
@@ -129,9 +128,6 @@ class PostController extends Controller
         }else{
             throw new \yii\web\HttpException(403, 'The requested Item could not be found.');
         }
-        
-        
-       
     }
 
     /**
@@ -183,6 +179,7 @@ class PostController extends Controller
         $provider = (new PostSearch())->provider($topic_id);
         
         if ($postModel->load(Yii::$app->request->post()) && $postModel->save()) {
+            $postModel = null;
             return $this->refresh();
         }else{
             return $this->render('posts', [ 'provider' => $provider, 'topic_id' => $topic_id, 'postModel' => $postModel]);
@@ -196,10 +193,11 @@ class PostController extends Controller
         if(\Yii::$app->user->can('updateOwnPost', ['post' => $model]) || \Yii::$app->user->can('updatePost')) {
         
             if($model->load(Yii::$app->request->post()) && $model->validate()){
+                
                 $model->save();
-
+                $model->content = '';
                 $provider = (new PostSearch())->provider($model->topic_id);
-
+                
                 return $this->render('posts', [ 'provider' => $provider, 'topic_id' => $model->topic_id, 'postModel' => $model]);
             }else{
                 return $this->render('editPost', ['model' => $model]);

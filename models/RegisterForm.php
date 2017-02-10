@@ -18,13 +18,15 @@ class RegisterForm extends Model
     public $email;
     public $password;
     public $password_repeat;
+    public $name;
     
     public function rules()
     {
         return [
-            [['email', 'password', 'password_repeat'], 'required', 'message' => 'Pole wymagane'],
+            [['email', 'name', 'password', 'password_repeat'], 'required', 'message' => 'Pole wymagane'],
+            ['name',  'unique', 'targetClass' => '\app\models\User', 'message' => 'Nazwa użytkowika jest już zajęta'],
             ['email', 'email', 'message' => 'To musi byc adres email'],
-            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Adres email zajęty'],
+            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Adres email jest już zajęty'],
             [['password', 'password_repeat'], 'string', 'max' => 10, 'min'=>6],
             ['password', 'compare'],
             [['email', 'password'], function ($attribute) {
@@ -41,6 +43,7 @@ class RegisterForm extends Model
         
         $user = new User();
         $user->email = $this->email;
+        $user->name = $this->name;
         $user->setPassword($this->password);
         $user->status = self::STATUS_UNACTIVE;
         $user->setRegisterToken();
@@ -53,7 +56,7 @@ class RegisterForm extends Model
             $userRole = $auth->getRole('user'); 
             $auth->assign($userRole, $user->getId()); 
             
-            $link = Url::to(['site/account-activation', 'token' => $user->register_token, 'id' => $user->id], true);
+            $link = Url::to(['site/account-activation', 'token' => $user->register_token], true);
             
             Yii::$app->mailer->compose()
                         ->setFrom('yiiforum@mail.com')

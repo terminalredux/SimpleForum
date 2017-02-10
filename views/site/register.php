@@ -9,11 +9,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput() ?>
 
+    <?= $form->field($model, 'name')->textInput()?>
+
     <?= $form->field($model, 'password_repeat')->passwordInput()->label('Password')  ?>
 
     <?= $form->field($model, 'password')->passwordInput()->label('Repeat password')  ?>
-
-    
 
     <div class="form-group">
         <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>

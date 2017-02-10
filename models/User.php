@@ -29,6 +29,8 @@ class User extends ActiveRecord implements IdentityInterface {
 
     const STATUS_UNACTIVE = 0;
     const STATUS_ACTIVE = 1;
+    
+    const USER_TYPE_SUPER_ADMIN = 1;
 
     public function behaviors() {
         return [TimestampBehavior::class];
@@ -48,8 +50,8 @@ class User extends ActiveRecord implements IdentityInterface {
         return [
             [['email', 'password', 'status', 'register_token'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'email', 'password', 'register_token', 'auth_key'], 'string', 'max' => 255],
-            [['email'], 'unique'],
+            [['email', 'password', 'register_token', 'auth_key'], 'string', 'max' => 255],
+            [['email', 'register_token'], 'unique'],
             [['email', 'password', 'name'], function ($attribute) {
                     $this->$attribute = HtmlPurifier::process($this->$attribute);
             }],

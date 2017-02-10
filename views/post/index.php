@@ -30,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'content:ntext',
             'created_at:datetime',
            
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

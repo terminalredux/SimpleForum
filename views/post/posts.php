@@ -10,7 +10,6 @@ use yii\helpers\Html;
 
 <h1><?= Html::encode(Topic::getTopicName($topic_id)) ?></h1>
 
-
 <div class="list-group">
     <?php
     echo ListView::widget([

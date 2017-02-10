@@ -7,10 +7,11 @@ use app\models\Category;
 use app\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
-use yii\filters\AccessControl;
+
 
 
 class CategoryController extends Controller
@@ -107,17 +108,9 @@ class CategoryController extends Controller
     
     public function actionCategory()
     {
-        $categoryModel = Category::find(); 
         
-         $provider = new ActiveDataProvider([
-            'query' => Category::find()
-                           ->orderBy('order'),
-                       
-            'pagination' => [
-                'pageSize' =>20,
-            ],
-            ]);
-        
+        $provider = (new CategorySearch())->provider();
         return $this->render('categories', ['provider' => $provider]);
+        
     }
 }

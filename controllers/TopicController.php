@@ -5,14 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\Topic;
 use app\models\Post;
+use app\models\Category;
+use app\models\PostSearch;
 use app\models\TopicSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
 use yii\data\ActiveDataProvider;
-use app\models\Category;
-use app\models\PostSearch;
 use yii\filters\AccessControl;
 
 /**

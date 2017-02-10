@@ -121,33 +121,26 @@ class SiteController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($user = $model->singup()) {
 
-                return $this->redirect('index');
-                
+                return $this->render('waitformail');
             }
         }
         return $this->render('register', ['model' => $model]);
     }
 
-    public function actionAccountActivation($token, $id) {
+    public function actionAccountActivation($token) {
 
-        $user = User::findOne($id);
-
-        if ($user->register_token == $token) {
+        $user = User::find()->where(['register_token' => $token])->one();
+        
+        if(isset($user)){
             $user->status = self::STATUS_ACTIVE;
             $user->save();
+            return $this->render('accountactivated');
+        }else{
+            return $this->render('activationerror');
         }
-        return $this->render('accountactivated', ['token' => $token, 'id' => $id]);
     }
 
     public function actionUserProfile() {
         return $this->render('profile');
     }
-
-    public function actionNothing() {
-        return $this->goHome();
-    }
-    
-    
-    
-
 }

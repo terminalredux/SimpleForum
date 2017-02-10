@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\User;
 
 AppAsset::register($this);
 ?>
@@ -26,6 +27,8 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+   
+    
     NavBar::begin([
         'brandLabel' => 'Super Forum',
         'brandUrl' => Yii::$app->homeUrl,
@@ -37,16 +40,20 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Auth', 
-            'visible' => !Yii::$app->user->isGuest,
+            'visible' => !Yii::$app->user->isGuest && User::getUserRole(Yii::$app->user->identity->id)['item_name'] == 'admin',
             'items' => [
                 ['label' => 'auth_item', 'url' => '/rbac/index'],
                 ],    
             ],
-            ['label' => 'Admin CRUD',
+            ['label' => 'CRUD',
             'visible' => !Yii::$app->user->isGuest,
             'items' => [
                 ['label' => 'User', 'url' => '/user/index'],
-                ['label' => 'Category', 'url' => '/category/index'],
+                [
+                    'label' => 'Category', 
+                    'url' => '/category/index', 
+                    'visible' => !Yii::$app->user->isGuest && User::getUserRole(Yii::$app->user->identity->id)['item_name'] == 'admin'
+                ],
                 ['label' => 'Topic', 'url' => '/topic/index'],
                 ['label' => 'Post', 'url' => '/post/index'],
                 ],    

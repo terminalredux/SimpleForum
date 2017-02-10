@@ -67,4 +67,18 @@ class CategorySearch extends Category
 
         return $dataProvider;
     }
+    
+    
+    public function provider(){
+        
+        $provider = new ActiveDataProvider([
+            'query' => Category::find()
+                      ->orderBy('order'),
+            'pagination' => [
+                'pageSize' =>20,
+            ],
+            ]);
+        
+        return $provider;
+    }
 }

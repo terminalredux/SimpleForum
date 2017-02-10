@@ -126,11 +126,5 @@ class Post extends \yii\db\ActiveRecord
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    
-    
-    
-    
-    
-     
+    }   
 }

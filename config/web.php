@@ -47,6 +47,7 @@ $config = [
         ],
     ],
     'params' => $params,
+    'defaultRoute' => 'category/category',
 ];
 
 if (YII_ENV_DEV) {
